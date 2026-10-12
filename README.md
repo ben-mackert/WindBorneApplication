@@ -4,6 +4,9 @@
 
 A two layer, 3.5 × 2.5 in board that runs the **same circuit twice**. One copy uses good layout practice and the other deliberately uses bad layout, so the switching noise difference can be measured directly on a scope.
 
+![Assembled board](images/board2_assembled.jpg)
+*The assembled board, hand-soldered with 1206 parts. Compare C5, right next to the good inverter U2, with C6, which sits about an inch away from the bad inverter U3 (bottom right). The blue and black jumpers are the isolation switches.*
+
 ![Layout](images/board2_layout.png)
 *Top copper is red and the bottom ground pour is blue. The black rectangle (bottom right) is a cutout in the ground pour under the "Bad Hex" circuit.*
 
@@ -50,11 +53,3 @@ A 3 pin jumper ("Hex Select") routes the 555 clock to one side at a time, and th
 ## What I'd change in rev 2 (caught in self-review)
 
 The selected-side indicator LED (LED + 1 kΩ to ground) sits on the same net as the 10 kΩ pull-up. On the *unselected* side these form a divider that parks the input near 1.8 V instead of 3.3 V, which is inside the 74AHC14's hysteresis band, so the input isn't guaranteed to read HIGH. The fix is to drive the indicator from an inverter *output* instead of the input net.
-
----
-
-### Previous board (Board 1): 555 LED driver, worked first power-up with no rework
-
-![Board 1 assembled](images/board1_assembled.jpg)
-
-The 555 output measured 502 Hz at 66% duty cycle, against a predicted 481 Hz and 66.7%. Comparing the loaded and unloaded high levels with the isolation jumper gave a Thevenin output resistance of about 32 Ω for the LMC555. That lesson carried into Board 2: the driver's output resistance is comparable to a 47 Ω LED resistor, so it has to be part of the current calculation.
